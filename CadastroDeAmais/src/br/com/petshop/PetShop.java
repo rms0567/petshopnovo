@@ -1,67 +1,55 @@
 package br.com.petshop;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PetShop {
 
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		ArrayList<Animal> animais = new ArrayList<>();
-		int opcao;
-		
-		do {
-			System.out.println("\n=== MENU ===");
-			System.out.println("1 - Cadastrar Cachorro");
-			System.out.println("2 - Cadastrar Gato");
-			System.out.println("3 - Exibir animais");
-			System.out.println("4 - Sair");
-			System.out.println("escolha uma opção");
-			opcao = scanner.nextInt();
-			
-			switch(opcao) {
-			
-			case 1:
-				System.out.println("Nome do Cachorro");
-				String nomeCachorro = scanner.nextLine();
-				System.out.println("Idade do Cachorro");
-				int idadeCachorro = scanner.nextInt();
-				scanner.nextLine();
-				System.out.println("Raça do Cachorro");
-				String raca = scanner.nextLine();
-				animais.add(new Cachorro(nomeCachorro, idadeCachorro, raca));
-				System.out.println("Cachorro cadastrado com sucesso.");
-			break;
-			
-			case 2:
-				System.out.println("Nome do Gato: ");
-				String nomeGato = scanner.nextLine();
-				System.out.println("Idade do Gato: ");
-				int idadeGato = scanner.nextInt();
-				scanner.nextLine();
-				System.out.println("Cor do pelo do Gato: ");
-				String corPelo = scanner.nextLine();
-				animais.add(new Gato(nomeGato, idadeGato, corPelo));
-				System.out.println("Gato cadastrado com sucesso!");
-				break;
-			
-			case 3:
-				System.out.println("\nLista de animais");
-				for(Animal animal : animais) {
-					animal.exibirInfo();
-					break;
-				}
-			case 4:
-				System.out.println("Encerrando o programa...");
-				break;
-				default:
-				System.out.println("Opção inválida! Tente novamente.");
-				break;
-			}
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        GerenciadorAnimais gerenciador = new GerenciadorAnimais();
+        int opcao;
 
-		}
-		while  (opcao != 4);
+        // Loop do menu
+        do {
+            System.out.println("\n===============================");
+            System.out.println("== MENU DE CADASTRO DE PETSHOP ==");
+            System.out.println("=================================");
+            System.out.println("= 1️ Cadastrar GATO              =");
+            System.out.println("= 2️ Cadastrar CACHORRO          =");
+            System.out.println("= 3️ Exibir Todos os ANIMAIS     =");
+            System.out.println("= 4️ Localizar ANIMAL POR NOME   =");
+            System.out.println("= 0️ Sair                        =");
+            System.out.print("=➡ Escolha uma opção:          =");
 
-	}
+            // Lê a opção do menu
+            while (!scanner.hasNextInt()) {  // Garante que o usuário insira um número válido
+                System.out.println("⚠ Por favor, insira um número válido.");
+                scanner.next(); // Limpa a entrada inválida
+            }
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpa o buffer
 
+            switch (opcao) {
+                case 1:
+                    gerenciador.cadastrarAnimal(); // Cadastrar Gato
+                    break;
+                case 2:
+                    gerenciador.cadastrarAnimal(); // Cadastrar Cachorro
+                    break;
+                case 3:
+                    gerenciador.exibirAnimais(); // Exibir Todos os Animais
+                    break;
+                case 4:
+                    gerenciador.localizarAnimal(); // Localizar Animal por Nome
+                    break;
+                case 0:
+                    System.out.println("🔴 Saindo do sistema... Até logo!");
+                    break;
+                default:
+                    System.out.println("⚠ Opção inválida! Tente novamente.");
+            }
+        } while (opcao != 0);
+
+        scanner.close(); // Fecha o scanner ao final
+    }
 }
